@@ -32,9 +32,6 @@ Thumbs.db
 # Artifacts
 artifacts/
 
-# Local data
-notebook/data/
-
 # Uploads (temporary files)
 uploads/*.pdf
 

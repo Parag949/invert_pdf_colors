@@ -94,8 +94,8 @@ def upload_file():
         # Clean up temp directory
         shutil.rmtree(temp_dir)
         
-        flash(f'PDF processed successfully! Download: {output_filename}', 'success')
-        return redirect(url_for('download_file', filename=output_filename))
+        logger.info(f"Processing complete for {filename}")
+        return render_template('success.html', filename=output_filename)
         
     except Exception as e:
         logger.exception("Error processing PDF")
