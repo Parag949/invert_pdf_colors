@@ -95,6 +95,7 @@ Then open your browser to:
 - 💾 **Automatic download** - Get your inverted PDF immediately
 - 🎨 **Modern UI** - Clean, responsive interface
 - 📝 **Comprehensive logging** - All operations logged to `logs/app.log`
+- 🧹 **Automatic cleanup** - Removes temporary files on startup
 
 ## How It Works
 

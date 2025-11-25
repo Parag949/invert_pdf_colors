@@ -31,6 +31,36 @@ app.secret_key = os.urandom(24)
 app.config['UPLOAD_FOLDER'] = Path('uploads')
 app.config['UPLOAD_FOLDER'].mkdir(exist_ok=True)
 
+
+def cleanup_temp_files():
+    """Clean up temporary files on startup"""
+    try:
+        # Clean up uploads folder
+        uploads_dir = app.config['UPLOAD_FOLDER']
+        if uploads_dir.exists():
+            for file in uploads_dir.iterdir():
+                if file.is_file():
+                    file.unlink()
+                    logger.info(f"Cleaned up old upload: {file.name}")
+        
+        # Clean up system temp directories created by previous runs
+        temp_base = Path(tempfile.gettempdir())
+        for temp_dir in temp_base.glob('invert_pdf_*'):
+            if temp_dir.is_dir():
+                try:
+                    shutil.rmtree(temp_dir)
+                    logger.info(f"Cleaned up old temp directory: {temp_dir.name}")
+                except Exception as e:
+                    logger.warning(f"Could not remove {temp_dir.name}: {e}")
+        
+        logger.info("Startup cleanup complete")
+    except Exception as e:
+        logger.warning(f"Error during cleanup: {e}")
+
+
+# Run cleanup on startup
+cleanup_temp_files()
+
 # Log CPU info on startup
 cpu_count = os.cpu_count() or 1
 logger.info(f"Starting Flask app with {cpu_count} CPU cores available")
