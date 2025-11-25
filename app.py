@@ -27,9 +27,14 @@ logger = get_logger()
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB max file size
+# No max file size limit
 app.config['UPLOAD_FOLDER'] = Path('uploads')
 app.config['UPLOAD_FOLDER'].mkdir(exist_ok=True)
+
+# Log CPU info on startup
+cpu_count = os.cpu_count() or 1
+logger.info(f"Starting Flask app with {cpu_count} CPU cores available")
+logger.info(f"Multicore processing: Image inversion={cpu_count} processes, PDF extraction={min(32, cpu_count*2)} threads")
 
 ALLOWED_EXTENSIONS = {'pdf'}
 

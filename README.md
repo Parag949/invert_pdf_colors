@@ -115,7 +115,7 @@ Application logs are written to `logs/app.log` with rotation enabled.
 
 ## Performance Notes
 
-- Maximum upload size: **50MB**
+- **No file size limit** - Process any size PDF
 - Processing time depends on PDF size and DPI settings
 - Lower DPI = faster processing, smaller file size
 - Higher DPI = better quality, larger file size
